@@ -453,22 +453,5 @@
 
         window.searchForStranger = function() {
             const messagesContainer = document.getElementById('chatMessages');
-            messagesContainer.innerHTML = '<div style="text-align:center; color:#57606f; margin-top:20px;">جاري البحث عن شخص...</div>';
-
-            setTimeout(() => {
-                messagesContainer.innerHTML = '';
-                const messageElement = document.createElement('div');
-                messageElement.classList.add('message', 'received');
-                messageElement.textContent = 'أهلاً بك! لقد تم الاتصال بمستخدم آخر. كيف يمكنني المساعدة؟';
-                messagesContainer.appendChild(messageElement);
-            }, 3500);
-        }
-
-        window.leaveChat = function() {
-            const messagesContainer = document.getElementById('chatMessages');
-            messagesContainer.innerHTML = '<div style="text-align:center; color:#ff4757; margin-top:20px;">تم إنهاء المحادثة بنجاح.</div>';
-        }
-    </script>
-</body>
-</html>
+            messagesContainer.innerHTML = '<div style="text-align:center; color:#57606f
 
