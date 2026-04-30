@@ -398,10 +398,9 @@
             }).catch((error) => {
                 alert("خطأ في تسجيل الدخول: " + error.message);
             });
-        }
-    </script>
-<script type="module">
+        <script type="module">
     import { initializeApp } from "https://www.gstatic.com/firebasejs/10.11.1/firebase-app.js";
+    import { getAuth } from "https://www.gstatic.com/firebasejs/10.11.1/firebase-auth.js";
 
     // إعدادات مشروعك على Firebase
     const firebaseConfig = {
@@ -413,6 +412,33 @@
         appId: "1:194977660065:web:c52a23377567e5ca4d04e0"
     };
 
+    // تهيئة Firebase
+    const app = initializeApp(firebaseConfig);
+    const auth = getAuth(app);
+
+    // الدوال الخاصة بالنوافذ المنبثقة
+    function openLoginModal() {
+        document.getElementById('loginModal').style.display = 'flex';
+    }
+
+    function closeLoginModal() {
+        document.getElementById('loginModal').style.display = 'none';
+    }
+
+    function startChatAction() {
+        openLoginModal();
+    }
+
+    // لربط الدوال بالأزرار
+    window.openLoginModal = openLoginModal;
+    window.closeLoginModal = closeLoginModal;
+    window.startChatAction = startChatAction;
+</script>
+
+
+
+   
+     
     // تهيئة Firebase
     const app = initializeApp(firebaseConfig);
 
