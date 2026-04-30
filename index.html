@@ -311,7 +311,7 @@
             color: #ff4757;
         }
 
-        /* القائمة الجانبية (الأصدقاء / الرسائل) */
+        /* القائمة الجانبية */
         .sidebar {
             flex: 1;
         }
@@ -640,17 +640,17 @@
 
     </div>
 
-    <div class="ai-bot-floating" onclick="toggleBot()">
+    <div class="ai-bot-floating" onclick="window.toggleBot()">
         <i class="fa-solid fa-robot"></i>
     </div>
 
     <div class="ai-bot-window" id="botWindow">
         <div class="bot-header">
             <h4>مساعد MOGA الذكي</h4>
-            <button onclick="toggleBot()">&times;</button>
+            <button onclick="window.toggleBot()">&times;</button>
         </div>
         <div class="bot-body">
-            <p>أهلاً بك! كيف يمكنني مساعدتك اليوم؟ (كتابة منشور، البحث عن أصدقاء...)</p>
+            <p>أهلاً بك! كيف يمكنني مساعدتك اليوم؟</p>
             <input type="text" placeholder="اكتب سؤالك هنا...">
             <button class="btn-primary" style="margin-top: 5px; width: 100%;">إرسال</button>
         </div>
@@ -658,7 +658,7 @@
 
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.11.1/firebase-app.js";
-        import { getAuth, signInWithPopup, TwitterAuthProvider } from "https://www.gstatic.com/firebasejs/10.11.1/firebase-auth.js";
+        import { getAuth, signInWithPopup, signInWithEmailAndPassword, TwitterAuthProvider } from "https://www.gstatic.com/firebasejs/10.11.1/firebase-auth.js";
 
         // إعدادات مشروعك على Firebase
         const firebaseConfig = {
@@ -682,10 +682,20 @@
             document.getElementById('loginModal').style.display = 'none';
         }
 
+        // تم تصحيح دالة تسجيل الدخول
         window.handleLogin = function() {
-            alert("تم تسجيل الدخول بنجاح");
-            window.closeLoginModal();
-            showPlatformInterface();
+            const email = document.getElementById('emailInput').value;
+            const password = document.getElementById('passwordInput').value;
+
+            signInWithEmailAndPassword(auth, email, password)
+                .then((userCredential) => {
+                    alert("تم تسجيل الدخول بنجاح");
+                    window.closeLoginModal();
+                    showPlatformInterface();
+                })
+                .catch((error) => {
+                    alert("خطأ في تسجيل الدخول: " + error.message);
+                });
         }
 
         window.loginWithTwitter = function() {
@@ -705,13 +715,9 @@
             document.getElementById('platformInterface').style.display = 'flex';
         }
 
-        // إرسال الرسالة في غرفة الدردشة
+        // تم تصحيح دالة إرسال الرسائل
         window.sendMessage = function() {
             const input = document.getElementById('messageInput');
-            const messageText(input);
-        }
-
-        function ctext(input) {
             const messageText(input);
         }
 
@@ -755,13 +761,10 @@
             messagesContainer.innerHTML = '<div style="text-align:center; color:#ff4757; margin-top:20px;">تم إنهاء المحادثة بنجاح.</div>';
         }
 
-        // تفعيل نافذة المساعد الذكي
         window.toggleBot = function() {
             var bot = document.getElementById("botWindow");
             bot.style.display = bot.style.display === "none" || bot.style.display === "" ? "block" : "none";
         }
-        
-        window.toggleBot = toggleBot;
     </script>
 </body>
 </html>
