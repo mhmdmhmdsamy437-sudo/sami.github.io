@@ -3,13 +3,15 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Moga - منصة الدردشة</title>
+    <title>موجا - منصة الدردشة</title>
     <style>
-        /* Reset & General Styles */
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        * {
+            box-sizing: border-box;
             margin: 0;
             padding: 0;
+        }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             background-color: #121212;
             color: #ffffff;
             direction: rtl;
@@ -41,13 +43,13 @@
         }
         .login-btn {
             background-color: #bb86fc;
-            color: #000;
+            color: #000000;
             border: none;
             padding: 10px 20px;
             border-radius: 8px;
             cursor: pointer;
             font-weight: bold;
-            transition: background 0.3s;
+            transition: background-color 0.3s;
         }
         .login-btn:hover {
             background-color: #9b6adb;
@@ -67,14 +69,14 @@
         }
         .hero .cta-btn {
             background-color: #03dac6;
-            color: #000;
+            color: #000000;
             border: none;
             padding: 15px 40px;
             border-radius: 25px;
             font-size: 18px;
             font-weight: bold;
             cursor: pointer;
-            transition: background 0.3s;
+            transition: background-color 0.3s;
             text-decoration: none;
             display: inline-block;
         }
@@ -82,7 +84,7 @@
             background-color: #018786;
         }
 
-        /* Login Modal */
+        /* نافذة تسجيل الدخول */
         #loginModal {
             display: none;
             position: fixed;
@@ -90,7 +92,7 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background-color: rgba(0,0,0,0.8);
+            background-color: rgba(0, 0, 0, 0.8);
             justify-content: center;
             align-items: center;
             z-index: 1000;
@@ -101,7 +103,7 @@
             border-radius: 16px;
             width: 400px;
             position: relative;
-            box-shadow: 0 5px 20px rgba(0,0,0,0.5);
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.5);
             color: #fff;
         }
         .close-btn {
@@ -137,6 +139,7 @@
             border-radius: 8px;
             box-sizing: border-box;
             outline: none;
+            transition: border-color 0.3s;
         }
         .form-group input:focus {
             border-color: #bb86fc;
@@ -145,13 +148,13 @@
             width: 100%;
             padding: 12px;
             background-color: #03dac6;
-            color: #000;
+            color: #000000;
             border: none;
             border-radius: 8px;
             font-weight: bold;
             cursor: pointer;
             margin-top: 10px;
-            transition: background 0.3s;
+            transition: background-color 0.3s;
         }
         .submit-btn:hover {
             background-color: #018786;
@@ -170,7 +173,7 @@
             border-radius: 8px;
             font-weight: bold;
             cursor: pointer;
-            transition: background 0.3s;
+            transition: background-color 0.3s;
         }
         .twitter-btn:hover {
             background-color: #0c85d0;
@@ -185,29 +188,28 @@
             text-decoration: none;
         }
 
-        /* Chat Container Style */
+        /* حاوية الدردشة */
         .chat-container {
             max-width: 650px;
             margin: 40px auto;
-            background: #fff;
+            background-color: #1e1e1e;
             padding: 25px;
             border-radius: 16px;
-            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.08);
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            color: #333;
-            display: none; /* مخفي تلقائياً حتى يضغط المستخدم على زر البدء */
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.3);
+            color: #ffffff;
+            display: none; /* يتم إظهاره بعد تسجيل الدخول */
         }
         .chat-header {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            border-bottom: 2px solid #f0f2f5;
+            border-bottom: 2px solid #2c2c2c;
             padding-bottom: 15px;
             margin-bottom: 15px;
         }
         .chat-header h2 {
             margin: 0;
-            color: #2c3e50;
+            color: #bb86fc;
             font-size: 20px;
         }
         .chat-header button {
@@ -218,7 +220,7 @@
             border-radius: 8px;
             cursor: pointer;
             font-weight: bold;
-            transition: background 0.3s;
+            transition: background-color 0.3s;
         }
         .chat-header button:hover {
             background-color: #ff6b81;
@@ -230,9 +232,9 @@
             display: flex;
             flex-direction: column;
             gap: 12px;
-            background: #fafafa;
+            background-color: #121212;
             border-radius: 10px;
-            border: 1px solid #e1e8ed;
+            border: 1px solid #2c2c2c;
         }
         .message {
             max-width: 75%;
@@ -243,14 +245,14 @@
             word-wrap: break-word;
         }
         .message.sent {
-            background-color: #70a1ff;
-            color: white;
+            background-color: #bb86fc;
+            color: #000;
             align-self: flex-end;
             border-bottom-right-radius: 2px;
         }
         .message.received {
-            background-color: #f1f2f6;
-            color: #333;
+            background-color: #242526;
+            color: #fff;
             align-self: flex-start;
             border-bottom-left-radius: 2px;
         }
@@ -262,28 +264,29 @@
         .chat-input-area input {
             flex: 1;
             padding: 14px;
-            border: 1px solid #ced6e0;
+            border: 1px solid #3a3b3c;
             border-radius: 10px;
             outline: none;
             font-size: 14px;
-            transition: border 0.3s;
-            background: #fff;
+            transition: border-color 0.3s;
+            background-color: #1a1a1a;
+            color: #fff;
         }
         .chat-input-area input:focus {
-            border-color: #70a1ff;
+            border-color: #bb86fc;
         }
         .chat-input-area button {
             padding: 14px 24px;
-            background-color: #2ed573;
-            color: white;
+            background-color: #03dac6;
+            color: #000000;
             border: none;
             border-radius: 10px;
             cursor: pointer;
             font-weight: bold;
-            transition: background 0.3s;
+            transition: background-color 0.3s;
         }
         .chat-input-area button:hover {
-            background-color: #26af5f;
+            background-color: #018786;
         }
         .chat-controls {
             margin-top: 15px;
@@ -297,7 +300,7 @@
             border-radius: 10px;
             cursor: pointer;
             font-weight: bold;
-            transition: background 0.3s;
+            transition: background-color 0.3s;
         }
         .btn-search:hover {
             background-color: #747d8c;
@@ -318,33 +321,33 @@
 
     <div class="hero">
         <h1>تواصل، العب، واربح!</h1>
-        <p>اجمع بين دردشة الفيديو العشوائية، البث المباشر، وتحديات الألعاب في مكان واحد مع مجتمع تفاعلي متكامل.</p>
+        <p>اجمع بين دردشة الفيديو العشوائية، بث مباشر، وتحديات ألعاب في مكان واحد مع مجتمع تفاعلي.</p>
         <button class="cta-btn" onclick="startChatAction()">ابدأ الدردشة العشوائية الآن</button>
     </div>
 
     <div id="loginModal">
         <div class="modal-content">
             <span class="close-btn" onclick="closeLoginModal()">&times;</span>
-            <h2>تسجيل الدخول إلى Moga</h2>
-            
+            <h2>تسجيل الدخول إلى موغا</h2>
+
             <div class="form-group">
                 <label for="emailInput">البريد الإلكتروني</label>
                 <input type="email" id="emailInput" placeholder="أدخل بريدك الإلكتروني">
             </div>
-            
+
             <div class="form-group">
                 <label for="passwordInput">كلمة المرور</label>
                 <input type="password" id="passwordInput" placeholder="أدخل كلمة المرور">
             </div>
-            
+
             <button class="submit-btn" onclick="handleLogin()">دخول</button>
-            
+
             <div class="or-text">أو</div>
-            
+
             <button class="twitter-btn" onclick="loginWithTwitter()">تسجيل الدخول بواسطة تويتر</button>
-            
+
             <div class="signup-link">
-                ليس لديك حساب؟ <a href="#">إنشاء حساب</a>
+                ليس لديك حساب؟ <a href="#">إنشاء الحساب</a>
             </div>
         </div>
     </div>
@@ -352,126 +355,70 @@
     <div class="chat-container" id="chatInterface">
         <div class="chat-header">
             <h2>MOGA - غرفة الدردشة العشوائية</h2>
-            <button id="disconnectBtn" onclick="leaveChat()">إنهاء المحادثة</button>
+            <button id="disconnectBtn" onclick="leaveChat()">مغادرة</button>
         </div>
-        
+
         <div class="chat-messages" id="chatMessages">
             <div style="text-align:center; color:#57606f; margin-top: 20px;">
-                اضغط على "بحث عن شخص غريب" لبدء المحادثة الآن!
+                اضغط على "ابحث عن شخص غريب" للبدء الآن!
             </div>
         </div>
-        
+
         <div class="chat-input-area">
             <input type="text" id="messageInput" placeholder="اكتب رسالتك هنا..." onkeypress="handleKeyPress(event)">
             <button onclick="sendMessage()">إرسال</button>
         </div>
-        
+
         <div class="chat-controls">
-            <button class="btn-search" onclick="searchForStranger()">بحث عن شخص غريب</button>
+            <button class="btn-search" onclick="searchForStranger()">ابحث عن شخص غريب</button>
         </div>
     </div>
 
     <script type="module">
-        import { initializeApp } from "https://www.gstatic.com/firebasejs/9.6.0/firebase-app.js";
-        import { getAuth, signInWithPopup, TwitterAuthProvider } from "https://www.gstatic.com/firebasejs/9.6.0/firebase-auth.js";
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.11.1/firebase-app.js";
+        import { getAuth, signInWithPopup, TwitterAuthProvider } from "https://www.gstatic.com/firebasejs/10.11.1/firebase-auth.js";
 
+        // إعدادات مشروعك على Firebase
         const firebaseConfig = {
-            apiKey: "AIzaSyBBANVs7yK-L7IC1NELk3MtjrVmrFDACWA",
+            apiKey: "AIzaSyBBANVs7Yk-L7IC1NElk3MtjrVmRfDACWA",
             authDomain: "moga-platform.firebaseapp.com",
             projectId: "moga-platform",
             storageBucket: "moga-platform.appspot.com",
             messagingSenderId: "194977660065",
-            appId: "1:194977660065:web:c52a23377567e5ca4d04e0",
-            measurementId: "G-38PC3648BP"
+            appId: "1:194977660065:web:c52a23377567e5ca4d04e0"
         };
 
         const app = initializeApp(firebaseConfig);
         const auth = getAuth(app);
         const twitterProvider = new TwitterAuthProvider();
 
-        window.loginWithTwitter = function() {
-            signInWithPopup(auth, twitterProvider)
-            .then((result) => {
-                alert("تم تسجيل الدخول بنجاح بواسطة تويتر");
-                closeLoginModal();
-                showChatInterface();
-            }).catch((error) => {
-                alert("خطأ في تسجيل الدخول: " + error.message);
-            });
-        <script type="module">
-    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.11.1/firebase-app.js";
-    import { getAuth } from "https://www.gstatic.com/firebasejs/10.11.1/firebase-auth.js";
-
-    // إعدادات مشروعك على Firebase
-    const firebaseConfig = {
-        apiKey: "AIzaSyBBANVs7Yk-L7IC1NElk3MtjrVmRfDACWA",
-        authDomain: "moga-platform.firebaseapp.com",
-        projectId: "moga-platform",
-        storageBucket: "moga-platform.appspot.com",
-        messagingSenderId: "194977660065",
-        appId: "1:194977660065:web:c52a23377567e5ca4d04e0"
-    };
-
-    // تهيئة Firebase
-    const app = initializeApp(firebaseConfig);
-    const auth = getAuth(app);
-
-    // الدوال الخاصة بالنوافذ المنبثقة
-    function openLoginModal() {
-        document.getElementById('loginModal').style.display = 'flex';
-    }
-
-    function closeLoginModal() {
-        document.getElementById('loginModal').style.display = 'none';
-    }
-
-    function startChatAction() {
-        openLoginModal();
-    }
-
-    // لربط الدوال بالأزرار
-    window.openLoginModal = openLoginModal;
-    window.closeLoginModal = closeLoginModal;
-    window.startChatAction = startChatAction;
-</script>
-
-
-
-   
-     
-    // تهيئة Firebase
-    const app = initializeApp(firebaseConfig);
-
-    // الدوال الخاصة بالنوافذ المنبثقة
-    function openLoginModal() {
-        document.getElementById('loginModal').style.display = 'flex';
-    }
-
-    function closeLoginModal() {
-        document.getElementById('loginModal').style.display = 'none';
-    }
-
-    // لربط الدوال بالأزرار
-    window.openLoginModal = openLoginModal;
-    window.closeLoginModal = closeLoginModal;
-</script>
-
-        function openLoginModal() {
+        window.openLoginModal = function() {
             document.getElementById('loginModal').style.display = 'flex';
         }
 
-        function closeLoginModal() {
+        window.closeLoginModal = function() {
             document.getElementById('loginModal').style.display = 'none';
         }
 
-        function startChatAction() {
+        window.startChatAction = function() {
             openLoginModal();
         }
 
-        function handleLogin() {
-            alert("تم تسجيل الدخول بنجاح (محاكاة)");
+        window.handleLogin = function() {
+            alert("تم تسجيل الدخول بنجاح");
             closeLoginModal();
             showChatInterface();
+        }
+
+        window.loginWithTwitter = function() {
+            signInWithPopup(auth, twitterProvider)
+                .then((result) => {
+                    alert("تم تسجيل الدخول بنجاح بواسطة تويتر");
+                    closeLoginModal();
+                    showChatInterface();
+                }).catch((error) => {
+                    alert("خطأ في تسجيل الدخول: " + error.message);
+                });
         }
 
         function showChatInterface() {
@@ -480,49 +427,48 @@
             document.getElementById('chatInterface').style.display = 'block';
         }
 
-        function sendMessage() {
+        window.sendMessage = function() {
             const input = document.getElementById('messageInput');
             const messageText = input.value.trim();
-            
-            if (messageText !== '') {
+
+            if (messageText !== "") {
                 const messagesContainer = document.getElementById('chatMessages');
-                
+
                 const messageElement = document.createElement('div');
                 messageElement.classList.add('message', 'sent');
                 messageElement.textContent = messageText;
-                
+
                 messagesContainer.appendChild(messageElement);
                 input.value = '';
-                
+
                 messagesContainer.scrollTop = messagesContainer.scrollHeight;
             }
         }
 
-        function handleKeyPress(e) {
+        window.handleKeyPress = function(e) {
             if (e.key === 'Enter') {
                 sendMessage();
             }
         }
 
-        function searchForStranger() {
+        window.searchForStranger = function() {
             const messagesContainer = document.getElementById('chatMessages');
-            messagesContainer.innerHTML = '<div style="text-align:center; color:#57606f; margin-top:20px;">جاري البحث عن شخص عشوائي...</div>';
-            
+            messagesContainer.innerHTML = '<div style="text-align:center; color:#57606f; margin-top:20px;">جاري البحث عن شخص...</div>';
+
             setTimeout(() => {
                 messagesContainer.innerHTML = '';
                 const messageElement = document.createElement('div');
                 messageElement.classList.add('message', 'received');
-                messageElement.textContent = 'أهلاً بك! لقد تم الاتصال بمستخدم آخر. كيف يمكنني مساعدتك؟';
+                messageElement.textContent = 'أهلاً بك! لقد تم الاتصال بمستخدم آخر. كيف يمكنني المساعدة؟';
                 messagesContainer.appendChild(messageElement);
             }, 3500);
         }
 
-        function leaveChat() {
+        window.leaveChat = function() {
             const messagesContainer = document.getElementById('chatMessages');
             messagesContainer.innerHTML = '<div style="text-align:center; color:#ff4757; margin-top:20px;">تم إنهاء المحادثة بنجاح.</div>';
         }
     </script>
-
 </body>
 </html>
 
