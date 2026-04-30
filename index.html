@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>MOGA - منصة البث المباشر والتواصل</title>
+    <title>MOGA Live - منصة البث المباشر</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         * {
@@ -13,247 +13,296 @@
             font-family: Arial, sans-serif;
         }
         body {
-            background-color: #111111;
+            background-color: #0f0f0f;
             color: #ffffff;
+            padding-bottom: 80px; /* مساحة للقائمة السفلية */
         }
 
-        /* الشريط العلوي */
-        .navbar {
+        /* الشريط العلوي (محاكي لتانغو) */
+        .top-bar {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 20px 40px;
+            padding: 15px 20px;
             background-color: #1a1a1a;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.5);
-            position: sticky;
-            top: 0;
-            z-index: 100;
+            border-bottom: 1px solid #222;
         }
-        .navbar .logo {
-            font-size: 26px;
+        .top-bar .logo {
+            font-size: 22px;
             font-weight: bold;
             color: #ff3366;
             display: flex;
             align-items: center;
-            gap: 10px;
+            gap: 8px;
         }
-        .navbar .nav-links {
-            list-style: none;
+        .top-bar .actions {
             display: flex;
-            gap: 25px;
+            align-items: center;
+            gap: 20px;
         }
-        .navbar .nav-links a {
-            color: #ffffff;
-            text-decoration: none;
-            font-size: 15px;
-            font-weight: bold;
-            transition: color 0.3s;
-        }
-        .navbar .nav-links a:hover {
-            color: #ff3366;
-        }
-        .navbar .login-btn {
-            background-color: #ff3366;
-            color: #ffffff;
-            border: none;
-            padding: 10px 24px;
-            border-radius: 20px;
+        .top-bar .actions i {
+            font-size: 18px;
+            color: #aaa;
             cursor: pointer;
-            font-weight: bold;
-            transition: background-color 0.3s;
         }
-        .navbar .login-btn:hover {
-            background-color: #e60039;
-        }
-
-        /* القسم الرئيسي - البثوث المباشرة */
-        .hero {
-            padding: 40px 20px;
-            text-align: center;
-            background: linear-gradient(135deg, #1a1a1a, #111111);
-        }
-        .hero h1 {
-            font-size: 44px;
-            margin-bottom: 15px;
-            color: #ffffff;
-        }
-        .hero p {
-            color: #888;
-            margin-bottom: 30px;
-            font-size: 16px;
-        }
-
-        /* قسم شبكة البثوث */
-        .live-grid {
-            max-width: 1200px;
-            margin: 20px auto;
-            padding: 0 20px;
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
-            gap: 25px;
-        }
-        .live-card {
-            background-color: #1a1a1a;
-            border-radius: 14px;
-            overflow: hidden;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.4);
-            border: 1px solid #2c2c2c;
-            transition: transform 0.3s;
-        }
-        .live-card:hover {
-            transform: translateY(-5px);
-        }
-        .card-thumbnail {
-            position: relative;
-            height: 200px;
-            background-color: #222;
+        .top-bar .actions .user-icon {
+            width: 34px;
+            height: 34px;
+            background-color: #ff3366;
+            border-radius: 50%;
             display: flex;
             justify-content: center;
             align-items: center;
-            background-image: url('https://images.unsplash.com/photo-1517841905240-472988babdf9?w=500&auto=format&fit=crop');
+            font-size: 14px;
+            cursor: pointer;
+            color: #fff;
+        }
+
+        /* تصنيفات البث (Match / النجوم) */
+        .tabs {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            padding: 15px 0;
+            background-color: #141414;
+            border-bottom: 1px solid #222;
+        }
+        .tab-btn {
+            background-color: #222;
+            color: #aaa;
+            border: none;
+            padding: 8px 24px;
+            border-radius: 20px;
+            font-size: 14px;
+            cursor: pointer;
+            font-weight: bold;
+        }
+        .tab-btn.active {
+            background-color: #ff3366;
+            color: #fff;
+        }
+
+        /* شبكة البثوث */
+        .stream-grid {
+            max-width: 1200px;
+            margin: 20px auto;
+            padding: 0 15px;
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+            gap: 15px;
+        }
+
+        @media (min-width: 768px) {
+            .stream-grid {
+                grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+            }
+        }
+
+        .stream-card {
+            background-color: #1a1a1a;
+            border-radius: 12px;
+            overflow: hidden;
+            position: relative;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.5);
+            border: 1px solid #282828;
+            height: 280px;
+            display: flex;
+            flex-direction: column;
+        }
+        .stream-thumbnail {
+            flex: 1;
             background-size: cover;
             background-position: center;
+            position: relative;
         }
-        .live-badge {
+        .badge-nsfw {
             position: absolute;
-            top: 15px;
-            left: 15px;
+            top: 10px;
+            right: 10px;
+            background-color: #ff4757;
+            color: white;
+            font-size: 10px;
+            padding: 3px 8px;
+            border-radius: 4px;
+            font-weight: bold;
+        }
+        .badge-live {
+            position: absolute;
+            top: 10px;
+            left: 10px;
             background-color: #ff3366;
             color: white;
-            padding: 4px 10px;
-            border-radius: 6px;
-            font-size: 12px;
+            font-size: 10px;
+            padding: 3px 8px;
+            border-radius: 4px;
             font-weight: bold;
+        }
+        .views-count {
+            position: absolute;
+            bottom: 10px;
+            left: 10px;
+            background: rgba(0,0,0,0.6);
+            font-size: 11px;
+            padding: 2px 6px;
+            border-radius: 4px;
+            color: #ddd;
+        }
+        .card-footer {
+            padding: 10px;
+            background-color: #141414;
             display: flex;
             align-items: center;
-            gap: 5px;
-        }
-        .view-count {
-            position: absolute;
-            bottom: 15px;
-            left: 15px;
-            background-color: rgba(0,0,0,0.6);
-            padding: 4px 10px;
-            border-radius: 6px;
-            font-size: 12px;
-        }
-        .card-body {
-            padding: 15px;
+            justify-content: space-between;
         }
         .streamer-info {
             display: flex;
             align-items: center;
-            gap: 12px;
-            margin-bottom: 10px;
+            gap: 8px;
         }
-        .streamer-avatar {
-            width: 44px;
-            height: 44px;
+        .avatar {
+            width: 28px;
+            height: 28px;
             border-radius: 50%;
             background-color: #333;
-            background-image: url('https://via.placeholder.com/150');
-            background-size: cover;
         }
-        .streamer-text h3 {
-            font-size: 15px;
+        .streamer-details h4 {
+            font-size: 12px;
             color: #fff;
         }
-        .streamer-text span {
-            font-size: 12px;
+        .streamer-details span {
+            font-size: 10px;
             color: #888;
         }
-        .card-body p {
-            font-size: 13px;
-            color: #bbb;
-            margin-bottom: 15px;
-        }
-        .btn-join {
-            width: 100%;
-            background-color: #2c2c2c;
+        .join-btn {
+            background: #ff3366;
             color: #fff;
             border: none;
-            padding: 10px;
-            border-radius: 8px;
+            padding: 5px 10px;
+            border-radius: 6px;
+            font-size: 11px;
             cursor: pointer;
             font-weight: bold;
-            transition: background 0.2s;
         }
-        .btn-join:hover {
-            background-color: #ff3366;
+        .join-btn:hover {
+            background: #e60039;
         }
 
-        /* نافذة الدردشة مع البوت (Floating) */
+        /* شريط التنقل السفلي */
+        .bottom-nav {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            background-color: #1a1a1a;
+            display: flex;
+            justify-content: space-around;
+            padding: 12px 0;
+            border-top: 1px solid #222;
+            z-index: 90;
+        }
+        .nav-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 4px;
+            color: #888;
+            cursor: pointer;
+            text-decoration: none;
+            font-size: 11px;
+        }
+        .nav-item.active, .nav-item:hover {
+            color: #ff3366;
+        }
+        .nav-item i {
+            font-size: 18px;
+        }
+
+        /* زر الإضافة العائم */
+        .float-live-btn {
+            position: fixed;
+            bottom: 75px;
+            right: 20px;
+            width: 55px;
+            height: 55px;
+            background: linear-gradient(135deg, #ff3366, #ff0055);
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: #fff;
+            box-shadow: 0 4px 15px rgba(255,51,102,0.4);
+            z-index: 95;
+            cursor: pointer;
+        }
+
+        /* المساعد الذكي */
         .chat-bot-floating {
             position: fixed;
-            bottom: 30px;
-            right: 30px;
-            width: 65px;
-            height: 65px;
-            background-color: #ff3366;
+            bottom: 140px;
+            right: 20px;
+            width: 55px;
+            height: 55px;
+            background-color: #333;
             color: #fff;
             border-radius: 50%;
             display: flex;
             justify-content: center;
             align-items: center;
-            font-size: 26px;
+            font-size: 22px;
             cursor: pointer;
-            box-shadow: 0 4px 15px rgba(255,51,102,0.4);
+            box-shadow: 0px 4px 10px rgba(0,0,0,0.5);
             z-index: 99;
-            transition: transform 0.2s;
+            border: 1px solid #444;
         }
-        .chat-bot-floating:hover {
-            transform: scale(1.1);
-        }
-        
         .chat-bot-window {
             display: none;
             position: fixed;
-            bottom: 110px;
-            right: 30px;
-            width: 340px;
-            height: 420px;
+            bottom: 200px;
+            right: 20px;
+            width: 320px;
+            height: 380px;
             background-color: #1a1a1a;
+            border-radius: 12px;
+            box-shadow: 0px 5px 15px rgba(0,0,0,0.6);
             border: 1px solid #333;
-            border-radius: 14px;
-            box-shadow: 0 5px 20px rgba(0,0,0,0.5);
             z-index: 100;
             display: flex;
             flex-direction: column;
         }
         .bot-header {
             background-color: #ff3366;
-            padding: 12px 16px;
-            border-top-left-radius: 12px;
-            border-top-right-radius: 12px;
+            padding: 12px;
+            border-top-left-radius: 11px;
+            border-top-right-radius: 11px;
             display: flex;
             justify-content: space-between;
             align-items: center;
         }
         .bot-header h4 {
-            font-size: 15px;
             color: #fff;
+            font-size: 14px;
         }
         .bot-header button {
             background: none;
             border: none;
             color: #fff;
-            font-size: 20px;
+            font-size: 18px;
             cursor: pointer;
         }
         .bot-messages {
             flex: 1;
-            padding: 15px;
+            padding: 12px;
             overflow-y: auto;
             display: flex;
             flex-direction: column;
-            gap: 10px;
-            background-color: #111111;
+            gap: 8px;
+            background-color: #0f0f0f;
         }
         .bot-message {
             max-width: 80%;
-            padding: 10px 14px;
-            border-radius: 10px;
-            font-size: 13px;
+            padding: 8px 12px;
+            border-radius: 8px;
+            font-size: 12px;
             line-height: 1.3;
         }
         .bot-message.user {
@@ -269,32 +318,31 @@
             border-bottom-left-radius: 2px;
         }
         .bot-input-area {
-            padding: 10px;
-            border-top: 1px solid #333;
+            padding: 8px;
+            background-color: #141414;
+            border-top: 1px solid #282828;
             display: flex;
-            gap: 8px;
-            background-color: #1a1a1a;
+            gap: 6px;
         }
         .bot-input-area input {
             flex: 1;
-            padding: 10px;
+            padding: 8px;
             background-color: #222;
             border: 1px solid #333;
             color: #fff;
-            border-radius: 8px;
+            border-radius: 6px;
             outline: none;
+            font-size: 12px;
         }
         .bot-input-area button {
             background-color: #ff3366;
             color: #fff;
             border: none;
-            padding: 10px 16px;
-            border-radius: 8px;
+            padding: 8px 12px;
+            border-radius: 6px;
             cursor: pointer;
             font-weight: bold;
-        }
-        .bot-input-area button:hover {
-            background-color: #e60039;
+            font-size: 11px;
         }
 
         /* نافذة تسجيل الدخول */
@@ -312,149 +360,181 @@
         }
         .modal-content {
             background-color: #1a1a1a;
-            padding: 30px;
-            border-radius: 16px;
-            width: 350px;
+            padding: 25px;
+            border-radius: 12px;
+            width: 320px;
             color: #fff;
             position: relative;
-            box-shadow: 0 5px 20px rgba(0,0,0,0.5);
+            box-shadow: 0 4px 15px rgba(0,0,0,0.6);
             border: 1px solid #333;
         }
         .modal-content .close-btn {
             position: absolute;
-            top: 15px;
-            right: 20px;
-            font-size: 22px;
+            top: 10px;
+            right: 15px;
+            font-size: 18px;
             cursor: pointer;
             color: #666;
-        }
-        .modal-content .close-btn:hover {
-            color: #ff3366;
         }
         .modal-content h2 {
             color: #ff3366;
             text-align: center;
-            margin-bottom: 25px;
-            font-size: 20px;
+            margin-bottom: 20px;
+            font-size: 18px;
         }
         .form-group {
-            margin-bottom: 15px;
+            margin-bottom: 12px;
         }
         .form-group label {
             display: block;
-            margin-bottom: 6px;
+            margin-bottom: 4px;
             color: #888;
-            font-size: 12px;
+            font-size: 11px;
         }
         .form-group input {
             width: 100%;
-            padding: 12px;
+            padding: 10px;
             border: 1px solid #333;
-            border-radius: 8px;
+            border-radius: 6px;
             background-color: #222;
             color: #fff;
-            box-sizing: border-box;
+            font-size: 12px;
         }
         .submit-btn {
             width: 100%;
-            padding: 12px;
+            padding: 10px;
             background-color: #ff3366;
             color: #fff;
             border: none;
-            border-radius: 8px;
+            border-radius: 6px;
             font-weight: bold;
             cursor: pointer;
+            margin-top: 5px;
         }
         .submit-btn:hover {
             background-color: #e60039;
-        }
-
-        /* لغات العرض والتصميم المتجاوب */
-        @media (max-width: 768px) {
-            .navbar {
-                padding: 15px 20px;
-            }
-            .navbar .nav-links {
-                display: none;
-            }
         }
     </style>
 </head>
 <body>
 
-    <nav class="navbar">
+    <header class="top-bar">
         <div class="logo">
-            <i class="fa-solid fa-circle-dot" style="color: #ff3366;"></i> MOGA Live
+            <i class="fa-solid fa-circle-dot" style="color: #ff3366;"></i> MOGA
         </div>
-        <ul class="nav-links">
-            <li><a href="#">الصفحة الرئيسية</a></li>
-            <li><a href="#">المستخدمون المتميزون</a></li>
-            <li><a href="#">مركز الألعاب</a></li>
-        </ul>
-        <button class="login-btn" onclick="window.openLoginModal()">تسجيل الدخول</button>
-    </nav>
-
-    <section class="hero">
-        <h1>انضم إلى مجتمع البث المباشر والترفيه</h1>
-        <p>شاهد، تفاعل، وقم بالبث المباشر مع ملايين المستخدمين حول العالم.</p>
-        <button class="login-btn" style="font-size: 16px; padding: 14px 40px;" onclick="window.openLoginModal()">ابدأ البث الآن</button>
-    </section>
-
-    <main class="live-grid">
-        <div class="live-card">
-            <div class="card-thumbnail">
-                <div class="live-badge"><i class="fa-solid fa-circle" style="font-size: 8px;"></i> مباشر</div>
-                <div class="view-count"><i class="fa-solid fa-eye"></i> 1,420 مشاهد</div>
-            </div>
-            <div class="card-body">
-                <div class="streamer-info">
-                    <div class="streamer-avatar"></div>
-                    <div class="streamer-text">
-                        <h3>سارة أحمد</h3>
-                        <span>@sara_live</span>
-                    </div>
-                </div>
-                <p>بث مباشر للغناء والتحديات. تعال وانضم إلينا في محادثة ممتعة!</p>
-                <button class="btn-join" onclick="window.joinStream('سارة أحمد')">انضم إلى البث</button>
+        <div class="actions">
+            <i class="fa-solid fa-magnifying-glass" onclick="window.searchStream()"></i>
+            <i class="fa-regular fa-bell"></i>
+            <div class="user-icon" onclick="window.openLoginModal()">
+                <i class="fa-solid fa-user"></i>
             </div>
         </div>
-        
-        <div class="live-card">
-            <div class="card-thumbnail" style="background-image: url('https://images.unsplash.com/photo-1542751371-adc38448a05e?w=500&auto=format&fit=crop');">
-                <div class="live-badge"><i class="fa-solid fa-circle" style="font-size: 8px;"></i> مباشر</div>
-                <div class="view-count"><i class="fa-solid fa-eye"></i> 890 مشاهد</div>
+    </header>
+
+    <div class="tabs">
+        <button class="tab-btn active">لك</button>
+        <button class="tab-btn" onclick="alert('قسم النجوم متاح قريباً!')">كل النجوم</button>
+        <button class="tab-btn" onclick="window.openLoginModal()">Match</button>
+    </div>
+
+    <main class="stream-grid">
+        <div class="stream-card">
+            <div class="stream-thumbnail" style="background-image: url('https://images.unsplash.com/photo-1517841905240-472988babdf9?w=500&auto=format&fit=crop');">
+                <span class="badge-live">بث مباشر</span>
+                <span class="badge-nsfw">NSFW</span>
+                <span class="views-count"><i class="fa-solid fa-eye"></i> 25.7K</span>
             </div>
-            <div class="card-body">
+            <div class="card-footer">
                 <div class="streamer-info">
-                    <div class="streamer-avatar" style="background-color: #444;"></div>
-                    <div class="streamer-text">
-                        <h3>خالد محمود</h3>
-                        <span>@khalid_games</span>
+                    <div class="avatar" style="background-image: url('https://via.placeholder.com/150');"></div>
+                    <div class="streamer-details">
+                        <h4>Ateşli Edaniz</h4>
+                        <span>@edaniz</span>
                     </div>
                 </div>
-                <p>بث تحديات ألعاب احترافية (PUBG / Fortnite). لا تفوت المتعة!</p>
-                <button class="btn-join" onclick="window.joinStream('خالد محمود')">انضم إلى البث</button>
+                <button class="join-btn" onclick="window.joinStream('Ateşli Edaniz')">دخول</button>
             </div>
         </div>
 
-        <div class="live-card">
-            <div class="card-thumbnail" style="background-image: url('https://images.unsplash.com/photo-1516450360452-9312f5e86fc7?w=500&auto=format&fit=crop');">
-                <div class="live-badge"><i class="fa-solid fa-circle" style="font-size: 8px;"></i> مباشر</div>
-                <div class="view-count"><i class="fa-solid fa-eye"></i> 2,100 مشاهد</div>
+        <div class="stream-card">
+            <div class="stream-thumbnail" style="background-image: url('https://images.unsplash.com/photo-1542751371-adc38448a05e?w=500&auto=format&fit=crop');">
+                <span class="badge-live">بث مباشر</span>
+                <span class="views-count"><i class="fa-solid fa-eye"></i> 13.0M</span>
             </div>
-            <div class="card-body">
+            <div class="card-footer">
                 <div class="streamer-info">
-                    <div class="streamer-avatar" style="background-color: #666;"></div>
-                    <div class="streamer-text">
-                        <h3>أمنية ياسر</h3>
-                        <span>@omnia_yasser</span>
+                    <div class="avatar" style="background-color: #555;"></div>
+                    <div class="streamer-details">
+                        <h4>VIKA And NIKA</h4>
+                        <span>@vika_nika</span>
                     </div>
                 </div>
-                <p>جلسة حوارية مفتوحة وتلقي الاستفسارات حول الموضة والمكياج.</p>
-                <button class="btn-join" onclick="window.joinStream('أمنية ياسر')">انضم إلى البث</button>
+                <button class="join-btn" onclick="window.joinStream('VIKA And NIKA')">دخول</button>
+            </div>
+        </div>
+
+        <div class="stream-card">
+            <div class="stream-thumbnail" style="background-image: url('https://images.unsplash.com/photo-1516450360452-9312f5e86fc7?w=500&auto=format&fit=crop');">
+                <span class="badge-live">بث مباشر</span>
+                <span class="badge-nsfw">NSFW</span>
+                <span class="views-count"><i class="fa-solid fa-eye"></i> 29.1M</span>
+            </div>
+            <div class="card-footer">
+                <div class="streamer-info">
+                    <div class="avatar" style="background-color: #777;"></div>
+                    <div class="streamer-details">
+                        <h4>Mishooooo khalifaaa</h4>
+                        <span>@mishoooo</span>
+                    </div>
+                </div>
+                <button class="join-btn" onclick="window.joinStream('Mishooooo khalifaaa')">دخول</button>
+            </div>
+        </div>
+
+        <div class="stream-card">
+            <div class="stream-thumbnail" style="background-image: url('https://images.unsplash.com/photo-1492684223083-82276ae7cd3f?w=500&auto=format&fit=crop');">
+                <span class="badge-live">بث مباشر</span>
+                <span class="views-count"><i class="fa-solid fa-eye"></i> 1.27M</span>
+            </div>
+            <div class="card-footer">
+                <div class="streamer-info">
+                    <div class="avatar" style="background-color: #999;"></div>
+                    <div class="streamer-details">
+                        <h4>Miss Dark</h4>
+                        <span>@miss_dark</span>
+                    </div>
+                </div>
+                <button class="join-btn" onclick="window.joinStream('Miss Dark')">دخول</button>
             </div>
         </div>
     </main>
+
+    <div class="float-live-btn" onclick="window.openLoginModal()">
+        <i class="fa-solid fa-video" style="font-size: 22px;"></i>
+    </div>
+
+    <nav class="bottom-nav">
+        <a class="nav-item active" href="#">
+            <i class="fa-solid fa-star"></i>
+            <span>لك</span>
+        </a>
+        <a class="nav-item" href="#">
+            <i class="fa-solid fa-user-group"></i>
+            <span>متابعة</span>
+        </a>
+        <a class="nav-item" href="#">
+            <i class="fa-solid fa-compass"></i>
+            <span>استكشاف</span>
+        </a>
+        <a class="nav-item" href="#" onclick="window.openLoginModal()">
+            <i class="fa-solid fa-coins"></i>
+            <span>العملات المعدنية</span>
+        </a>
+        <a class="nav-item" href="#" onclick="window.openLoginModal()">
+            <i class="fa-solid fa-comments"></i>
+            <span>الدردشات</span>
+        </a>
+    </nav>
 
     <div id="loginModal">
         <div class="modal-content">
@@ -463,15 +543,15 @@
 
             <div class="form-group">
                 <label>البريد الإلكتروني</label>
-                <input type="email" placeholder="أدخل بريدك الإلكتروني">
+                <input type="email" id="emailInput" placeholder="أدخل بريدك الإلكتروني">
             </div>
 
             <div class="form-group">
                 <label>كلمة المرور</label>
-                <input type="password" placeholder="أدخل كلمة المرور">
+                <input type="password" id="passwordInput" placeholder="أدخل كلمة المرور">
             </div>
 
-            <button class="submit-btn" onclick="window.performLogin()">دخول</button>
+            <button class="submit-btn" onclick="window.handleLogin()">دخول</button>
         </div>
     </div>
 
@@ -485,7 +565,7 @@
             <button onclick="window.toggleBot()">&times;</button>
         </div>
         <div class="bot-messages" id="botMessages">
-            <div class="bot-message system">أهلاً بك! أنا مساعد منصة MOGA الذكي، كيف يمكنني مساعدتك اليوم؟</div>
+            <div class="bot-message system">أهلاً بك! أنا مساعد منصة MOGA، كيف يمكنني مساعدتك؟</div>
         </div>
         <div class="bot-input-area">
             <input type="text" id="botInput" placeholder="اكتب سؤالك هنا..." onkeypress="window.handleBotKey(event)">
@@ -493,8 +573,25 @@
         </div>
     </div>
 
-    <script>
-        // التحكم في نافذة تسجيل الدخول
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.11.1/firebase-app.js";
+        import { getAuth, signInWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/10.11.1/firebase-auth.js";
+
+        // تهيئة Firebase باستخدام بياناتك
+        const firebaseConfig = {
+            apiKey: "AIzaSyBBANVs7Yk-L7IC1NElk3MtjrVmRfDACWA",
+            authDomain: "moga-platform.firebaseapp.com",
+            projectId: "moga-platform",
+            storageBucket: "moga-platform.firebasestorage.app",
+            messagingSenderId: "194977660065",
+            appId: "1:194977660065:web:c52a23377567e5ca4d04e0",
+            measurementId: "G-38PC364BBP"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const auth = getAuth(app);
+
+        // التحكم في النوافذ
         window.openLoginModal = function() {
             document.getElementById('loginModal').style.display = 'flex';
         }
@@ -503,23 +600,37 @@
             document.getElementById('loginModal').style.display = 'none';
         }
 
-        window.performLogin = function() {
-            alert("تم إرسال بيانات الدخول بنجاح.");
-            window.closeLoginModal();
+        window.handleLogin = function() {
+            const email = document.getElementById('emailInput').value;
+            const password = document.getElementById('passwordInput').value;
+
+            if (!email || !password) {
+                alert("الرجاء إدخال البريد الإلكتروني وكلمة المرور.");
+                return;
+            }
+
+            signInWithEmailAndPassword(auth, email, password)
+                .then((userCredential) => {
+                    alert("تم إرسال بيانات الدخول بنجاح.");
+                    window.closeLoginModal();
+                })
+                .catch((error) => {
+                    alert("خطأ أثناء تسجيل الدخول: " + error.message);
+                });
         }
 
         window.joinStream = function(name) {
             alert("جارٍ الانضمام إلى بث " + name + "...");
         }
 
-        // التحكم في المساعد الذكي (Bot)
+        window.searchStream = function() {
+            alert("ميزة البحث ستتوفر قريباً!");
+        }
+
+        // المساعد الذكي
         window.toggleBot = function() {
             var botWindow = document.getElementById('botWindow');
-            if (botWindow.style.display === 'none' || botWindow.style.display === '') {
-                botWindow.style.display = 'flex';
-            } else {
-                botWindow.style.display = 'none';
-            }
+            botWindow.style.display = (botWindow.style.display === 'none' || botWindow.style.display === '') ? 'flex' : 'none';
         }
 
         window.sendBotMessage = function() {
@@ -529,7 +640,6 @@
             if (messageText !== '') {
                 var messagesContainer = document.getElementById('botMessages');
 
-                // إضافة رسالة المستخدم
                 var userMsg = document.createElement('div');
                 userMsg.className = 'bot-message user';
                 userMsg.textContent = messageText;
@@ -538,17 +648,15 @@
                 input.value = '';
                 messagesContainer.scrollTop = messagesContainer.scrollHeight;
 
-                // إجابة البوت التلقائية بعد ثانية
                 setTimeout(function() {
                     var systemMsg = document.createElement('div');
                     systemMsg.className = 'bot-message system';
 
-                    // الرد التلقائي حسب السؤال
-                    var answer = "شكراً لاستفسارك. إذا كنت تواجه مشكلة أو تحتاج إلى مساعدة، يمكنك التواصل مع الدعم الفني أو زيارة قسم الأسئلة الشائعة في المنصة.";
-                    if (messageText.includes("دعم") || messageText.includes("مشكلة")) {
-                        answer = "فريق الدعم لدينا يعمل 24/7، يمكنك كتابة تفاصيل المشكلة هنا وسنتواصل معك.";
-                    } else if (messageText.includes("بث") || messageText.includes("كيف")) {
-                        answer = "لبدء البث، يمكنك الضغط على زر 'ابدأ البث الآن' بعد تسجيل الدخول وإنشاء حسابك.";
+                    var answer = "شكراً لاستفسارك. يمكنك التواصل معنا في أي وقت لحل أي مشكلة تقنية تواجهها.";
+                    if (messageText.includes("بث") || messageText.includes("كيف")) {
+                        answer = "لبدء البث، يمكنك الضغط على الأيقونة العائمة (فيديو) وسنقوم بمراجعة الطلب.";
+                    } else if (messageText.includes("دعم") || messageText.includes("حساب")) {
+                        answer = "يمكنك إنشاء حسابك عن طريق تسجيل الدخول بالبريد الإلكتروني.";
                     }
 
                     systemMsg.textContent = answer;
