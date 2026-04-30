@@ -316,18 +316,18 @@
             <li><a href="#">البث المباشر</a></li>
             <li><a href="#">الدردشة العشوائية</a></li>
         </ul>
-        <button class="login-btn" onclick="openLoginModal()">تسجيل الدخول</button>
+        <button class="login-btn" onclick="window.openLoginModal()">تسجيل الدخول</button>
     </nav>
 
     <div class="hero">
         <h1>تواصل، العب، واربح!</h1>
         <p>اجمع بين دردشة الفيديو العشوائية، بث مباشر، وتحديات ألعاب في مكان واحد مع مجتمع تفاعلي.</p>
-        <button class="cta-btn" onclick="startChatAction()">ابدأ الدردشة العشوائية الآن</button>
+        <button class="cta-btn" onclick="window.startChatAction()">ابدأ الدردشة العشوائية الآن</button>
     </div>
 
     <div id="loginModal">
         <div class="modal-content">
-            <span class="close-btn" onclick="closeLoginModal()">&times;</span>
+            <span class="close-btn" onclick="window.closeLoginModal()">&times;</span>
             <h2>تسجيل الدخول إلى موغا</h2>
 
             <div class="form-group">
@@ -340,11 +340,11 @@
                 <input type="password" id="passwordInput" placeholder="أدخل كلمة المرور">
             </div>
 
-            <button class="submit-btn" onclick="handleLogin()">دخول</button>
+            <button class="submit-btn" onclick="window.handleLogin()">دخول</button>
 
             <div class="or-text">أو</div>
 
-            <button class="twitter-btn" onclick="loginWithTwitter()">تسجيل الدخول بواسطة تويتر</button>
+            <button class="twitter-btn" onclick="window.loginWithTwitter()">تسجيل الدخول بواسطة تويتر</button>
 
             <div class="signup-link">
                 ليس لديك حساب؟ <a href="#">إنشاء الحساب</a>
@@ -355,7 +355,7 @@
     <div class="chat-container" id="chatInterface">
         <div class="chat-header">
             <h2>MOGA - غرفة الدردشة العشوائية</h2>
-            <button id="disconnectBtn" onclick="leaveChat()">مغادرة</button>
+            <button id="disconnectBtn" onclick="window.leaveChat()">مغادرة</button>
         </div>
 
         <div class="chat-messages" id="chatMessages">
@@ -365,12 +365,12 @@
         </div>
 
         <div class="chat-input-area">
-            <input type="text" id="messageInput" placeholder="اكتب رسالتك هنا..." onkeypress="handleKeyPress(event)">
-            <button onclick="sendMessage()">إرسال</button>
+            <input type="text" id="messageInput" placeholder="اكتب رسالتك هنا..." onkeypress="window.handleKeyPress(event)">
+            <button onclick="window.sendMessage()">إرسال</button>
         </div>
 
         <div class="chat-controls">
-            <button class="btn-search" onclick="searchForStranger()">ابحث عن شخص غريب</button>
+            <button class="btn-search" onclick="window.searchForStranger()">ابحث عن شخص غريب</button>
         </div>
     </div>
 
@@ -401,12 +401,12 @@
         }
 
         window.startChatAction = function() {
-            openLoginModal();
+            window.openLoginModal();
         }
 
         window.handleLogin = function() {
             alert("تم تسجيل الدخول بنجاح");
-            closeLoginModal();
+            window.closeLoginModal();
             showChatInterface();
         }
 
@@ -414,7 +414,7 @@
             signInWithPopup(auth, twitterProvider)
                 .then((result) => {
                     alert("تم تسجيل الدخول بنجاح بواسطة تويتر");
-                    closeLoginModal();
+                    window.closeLoginModal();
                     showChatInterface();
                 }).catch((error) => {
                     alert("خطأ في تسجيل الدخول: " + error.message);
@@ -447,11 +447,28 @@
 
         window.handleKeyPress = function(e) {
             if (e.key === 'Enter') {
-                sendMessage();
+                window.sendMessage();
             }
         }
 
         window.searchForStranger = function() {
             const messagesContainer = document.getElementById('chatMessages');
-            messagesContainer.innerHTML = '<div style="text-align:center; color:#57606f
+            messagesContainer.innerHTML = '<div style="text-align:center; color:#57606f; margin-top:20px;">جاري البحث عن شخص...</div>';
+
+            setTimeout(() => {
+                messagesContainer.innerHTML = '';
+                const messageElement = document.createElement('div');
+                messageElement.classList.add('message', 'received');
+                messageElement.textContent = 'أهلاً بك! لقد تم الاتصال بمستخدم آخر. كيف يمكنني المساعدة؟';
+                messagesContainer.appendChild(messageElement);
+            }, 3500);
+        }
+
+        window.leaveChat = function() {
+            const messagesContainer = document.getElementById('chatMessages');
+            messagesContainer.innerHTML = '<div style="text-align:center; color:#ff4757; margin-top:20px;">تم إنهاء المحادثة بنجاح.</div>';
+        }
+    </script>
+</body>
+</html>
 
